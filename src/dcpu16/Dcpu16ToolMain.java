@@ -49,7 +49,7 @@ public class Dcpu16ToolMain {
 	private static void printHelp() {
 		System.err.println();
 		System.err.println("Usage: java -jar Dcpu16Tool.jar <filename>");
-		System.err.println("  - files with '.s' extension will be assembled.");
-		System.err.println("  - files with '.bin' extension will be disassembled.");
+		System.err.println("  - files with '"+ EXTENTION_ASSEMBLY +"' extension will be assembled.");
+		System.err.println("  - files with '"+ EXTENTION_BINARY +"' extension will be disassembled (not implemented).");
 	}
 }

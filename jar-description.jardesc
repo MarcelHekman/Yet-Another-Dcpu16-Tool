@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="C:/Users/Hekman/Desktop/Dcpu16Tool.jar"/>
+    <jar path="C:/Users/Hekman/Desktop/YetAnotherDcpu16Tool.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/DCPU16/jar-description.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -12,8 +12,8 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
         <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.common"/>
-        <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.assembler"/>
         <javaElement handleIdentifier="=DCPU16/lib"/>
+        <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.assembler"/>
         <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16"/>
     </selectedElements>
 </jardesc>

@@ -1,5 +1,6 @@
 INTRODUCTION
 
+
 Everything based on the 1.1 specification for the DCPU-16 found at http://0x10c.com/doc/dcpu-16.txt
 
 FEATURES
@@ -14,6 +15,7 @@ POSSIBLE FUTURE FEATURES
   
 
 DEVELOPMENT ENVIRONMENT
+ * Java
  * Eclipse                    http://www.eclipse.org/
  * Eclipse plugin ANTLR IDE   http://antlrv3ide.sourceforge.net/
  * ANTLR                      http://www.antlr.org/
