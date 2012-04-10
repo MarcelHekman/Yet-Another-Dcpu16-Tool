@@ -1,0 +1,20 @@
+INTRODUCTION
+
+Everything based on the 1.1 specification for the DCPU-16 found at http://0x10c.com/doc/dcpu-16.txt
+
+FEATURES
+ * Assembler: Assembling from the specified assembly format to binary machine code. 
+
+POSSIBLE FUTURE FEATURES
+ * Disassembler: Disassembling from binary machine code to the assembly format.
+ * Compiler: From a Java or C-like language to the assembly format. This compiler will
+     probably focus on keeping as close to the 'hardware' as possible. For example I
+     don't plan to add basic types that can't be implemented efficiëntly in the
+     'hardware'. This may change in the future however...
+  
+
+DEVELOPMENT ENVIRONMENT
+ * Eclipse                    http://www.eclipse.org/
+ * Eclipse plugin ANTLR IDE   http://antlrv3ide.sourceforge.net/
+ * ANTLR                      http://www.antlr.org/
+
