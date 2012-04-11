@@ -43,7 +43,7 @@ public class Dcpu16Assembler {
 			while(hexString2.length() < 2) {
 				hexString2 = "0" + hexString2;
 			}
-			System.out.println(hexString1 + hexString2);
+			System.err.println(hexString1 + hexString2);
 		}
 	}
 }

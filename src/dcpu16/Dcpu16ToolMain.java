@@ -2,8 +2,10 @@ package dcpu16;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 
 import dcpu16.assembler.Dcpu16Assembler;
+import dcpu16.disassembler.Dcpu16Disassembler;
 
 public class Dcpu16ToolMain {
 
@@ -22,27 +24,69 @@ public class Dcpu16ToolMain {
 		}
 		
 		String inputFilename = args[0];
+		File inputFile = new File(inputFilename, "r");
+		
+		if(! inputFile.exists()) {
+			System.err.println("Input file '"+ inputFilename +"' not found.");
+			printHelp();
+			return;
+		}
+		
 		if(inputFilename.endsWith(EXTENTION_ASSEMBLY)) {
 			String outputFilename = inputFilename.substring(0, inputFilename.length() - EXTENTION_ASSEMBLY.length());
 			outputFilename += EXTENTION_BINARY;
-			Dcpu16Assembler assembler = new Dcpu16Assembler();
-
-			try {
-				byte[] outputBytes = assembler.assembleFile(inputFilename);
-				File outputFile = new File(outputFilename);
-				FileOutputStream outputStream = new FileOutputStream(outputFile);
-				outputStream.write(outputBytes);
-			}
-			catch(Exception e) {
-				e.printStackTrace(System.err);
-			}
+			assembleFile(inputFilename, outputFilename);
 		}
 		else if(inputFilename.endsWith(EXTENTION_BINARY)) {
-			System.err.println("Disassembling is not supported (yet).");
+			String outputFilename = inputFilename.substring(0, inputFilename.length() - EXTENTION_BINARY.length());
+			outputFilename += EXTENTION_DISASSEMBLY;
+			disassembleFile(inputFilename, outputFilename);
 		}
 		else {
 			System.err.println("Unknown file extenstion");
 			printHelp();
+		}
+	}
+	
+	private static void assembleFile(String inputFilename, String outputFilename) {
+		Dcpu16Assembler assembler = new Dcpu16Assembler();
+		FileOutputStream outputStream = null;;
+		try {
+			byte[] outputBytes = assembler.assembleFile(inputFilename);
+			File outputFile = new File(outputFilename);
+			outputStream = new FileOutputStream(outputFile);
+			outputStream.write(outputBytes);
+		}
+		catch(Exception e) {
+			e.printStackTrace(System.err);
+		}
+		finally {
+			try {
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private static void disassembleFile(String inputFilename, String outputFilename) {
+		Dcpu16Disassembler disassembler = new Dcpu16Disassembler();
+		FileWriter outputStream = null;
+		try {
+			String disassembledData = disassembler.disassembleFile(inputFilename);
+			File outputFile = new File(outputFilename);
+			outputStream = new FileWriter(outputFile);
+			outputStream.write(disassembledData);
+		}
+		catch(Exception e) {
+			e.printStackTrace(System.err);
+		}
+		finally {
+			try {
+				outputStream.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

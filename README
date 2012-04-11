@@ -5,9 +5,11 @@ Everything based on the 1.1 specification for the DCPU-16 found at http://0x10c.
 
 FEATURES
  * Assembler: Assembling from the specified assembly format to binary machine code. 
+ * Disassembler: Disassembling from binary machine code to the assembly format.
 
 POSSIBLE FUTURE FEATURES
- * Disassembler: Disassembling from binary machine code to the assembly format.
+ * Assembler: Add support for short form labels. 
+ * Disassembler: Guessing for potential label locations.
  * Compiler: From a Java or C-like language to the assembly format. This compiler will
      probably focus on keeping as close to the 'hardware' as possible. For example I
      don't plan to add basic types that can't be implemented efficiëntly in the

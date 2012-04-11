@@ -14,10 +14,8 @@ public class NotchDisassemblerExample {
 	public void testNotchDisassemblerExample() throws Exception {
 		Dcpu16Disassembler dcpuDisassembler = new Dcpu16Disassembler();
 		InputStream input = ClassLoader.getSystemResourceAsStream("dcpu16/test/disassembler/NotchExample.bin");
-		//dcpuDisassembler
-		//dcpuAssembler.assemleInputStream(input);
-		//dcpuAssembler.hexDump(input);
-		//TODO
+		String disassembled = dcpuDisassembler.disassemleInputStream(input);
+		System.err.println(disassembled);
 	}
 
 }

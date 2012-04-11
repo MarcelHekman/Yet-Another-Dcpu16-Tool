@@ -1,12 +1,12 @@
-// $ANTLR 3.4 E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g 2012-04-10 20:00:30
+// $ANTLR 3.4 E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g 2012-04-11 17:02:39
 
 package dcpu16.assembler;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import dcpu16.common.InstructionValue;
-import dcpu16.common.Opcode;
+import dcpu16.common.OpCode;
+import dcpu16.common.OpValueCode;
 
 
 import org.antlr.runtime.*;
@@ -116,13 +116,13 @@ public class Dcpu16AssemlberParser extends Parser {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:79:5: (s= statements EOF )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:79:9: s= statements EOF
             {
-            pushFollow(FOLLOW_statements_in_assembler_file348);
+            pushFollow(FOLLOW_statements_in_assembler_file349);
             s=statements();
 
             state._fsp--;
 
 
-            match(input,EOF,FOLLOW_EOF_in_assembler_file350); 
+            match(input,EOF,FOLLOW_EOF_in_assembler_file351); 
 
 
                             binaryOutput = new byte[s.size() * 2];
@@ -137,7 +137,7 @@ public class Dcpu16AssemlberParser extends Parser {
                                     }
                                     String labelName = unidentifiedLabelsReverse.get(value);
                                     realValue = identifiedLabels.get(labelName);
-                                    System.err.println("Replacing value for "+ labelName +" from "+ value +" to "+ realValue +".");
+                                    //System.err.println("Replacing label '"+ labelName +"' value "+ value +" with "+ realValue +".");
                                 }
                                 else if(value > 0xFFFF) {
                                     throw new RuntimeException("Word value '"+ value +"' exceeds maximum of '"+ 0xFFFF +"', SHOULD NEVER HAPPEN!");
@@ -198,7 +198,7 @@ public class Dcpu16AssemlberParser extends Parser {
             	case 1 :
             	    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:114:10: s1= statement NEWLINE
             	    {
-            	    pushFollow(FOLLOW_statement_in_statements407);
+            	    pushFollow(FOLLOW_statement_in_statements408);
             	    s1=statement();
 
             	    state._fsp--;
@@ -206,7 +206,7 @@ public class Dcpu16AssemlberParser extends Parser {
 
             	     valueList.addAll(s1); 
 
-            	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statements411); 
+            	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statements412); 
 
             	    }
             	    break;
@@ -224,7 +224,7 @@ public class Dcpu16AssemlberParser extends Parser {
             	        case 1 :
             	            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:114:59: WS
             	            {
-            	            match(input,WS,FOLLOW_WS_in_statements415); 
+            	            match(input,WS,FOLLOW_WS_in_statements416); 
 
             	            }
             	            break;
@@ -232,7 +232,7 @@ public class Dcpu16AssemlberParser extends Parser {
             	    }
 
 
-            	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statements418); 
+            	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statements419); 
 
             	    }
             	    break;
@@ -258,7 +258,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:114:75: s2= statement
                     {
-                    pushFollow(FOLLOW_statement_in_statements424);
+                    pushFollow(FOLLOW_statement_in_statements425);
                     s2=statement();
 
                     state._fsp--;
@@ -313,7 +313,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:118:9: WS
                     {
-                    match(input,WS,FOLLOW_WS_in_statement450); 
+                    match(input,WS,FOLLOW_WS_in_statement451); 
 
                     }
                     break;
@@ -332,13 +332,13 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:118:14: label_declaration WS ( ( NEWLINE )+ WS )*
                     {
-                    pushFollow(FOLLOW_label_declaration_in_statement454);
+                    pushFollow(FOLLOW_label_declaration_in_statement455);
                     label_declaration();
 
                     state._fsp--;
 
 
-                    match(input,WS,FOLLOW_WS_in_statement456); 
+                    match(input,WS,FOLLOW_WS_in_statement457); 
 
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:118:35: ( ( NEWLINE )+ WS )*
                     loop6:
@@ -371,7 +371,7 @@ public class Dcpu16AssemlberParser extends Parser {
                     	    	case 1 :
                     	    	    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:118:36: NEWLINE
                     	    	    {
-                    	    	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statement459); 
+                    	    	    match(input,NEWLINE,FOLLOW_NEWLINE_in_statement460); 
 
                     	    	    }
                     	    	    break;
@@ -386,7 +386,7 @@ public class Dcpu16AssemlberParser extends Parser {
                     	    } while (true);
 
 
-                    	    match(input,WS,FOLLOW_WS_in_statement462); 
+                    	    match(input,WS,FOLLOW_WS_in_statement463); 
 
                     	    }
                     	    break;
@@ -403,7 +403,7 @@ public class Dcpu16AssemlberParser extends Parser {
             }
 
 
-            pushFollow(FOLLOW_operation_in_statement470);
+            pushFollow(FOLLOW_operation_in_statement471);
             opList=operation();
 
             state._fsp--;
@@ -420,7 +420,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:118:69: WS
                     {
-                    match(input,WS,FOLLOW_WS_in_statement472); 
+                    match(input,WS,FOLLOW_WS_in_statement473); 
 
                     }
                     break;
@@ -492,21 +492,21 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:129:9: basic_operation_code WS ov1= operation_value COMMA ( WS )? ov2= operation_value
                     {
-                    pushFollow(FOLLOW_basic_operation_code_in_operation531);
+                    pushFollow(FOLLOW_basic_operation_code_in_operation532);
                     basic_operation_code1=basic_operation_code();
 
                     state._fsp--;
 
 
-                    match(input,WS,FOLLOW_WS_in_operation533); 
+                    match(input,WS,FOLLOW_WS_in_operation534); 
 
-                    pushFollow(FOLLOW_operation_value_in_operation537);
+                    pushFollow(FOLLOW_operation_value_in_operation538);
                     ov1=operation_value();
 
                     state._fsp--;
 
 
-                    match(input,COMMA,FOLLOW_COMMA_in_operation539); 
+                    match(input,COMMA,FOLLOW_COMMA_in_operation540); 
 
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:129:59: ( WS )?
                     int alt9=2;
@@ -519,7 +519,7 @@ public class Dcpu16AssemlberParser extends Parser {
                         case 1 :
                             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:129:59: WS
                             {
-                            match(input,WS,FOLLOW_WS_in_operation541); 
+                            match(input,WS,FOLLOW_WS_in_operation542); 
 
                             }
                             break;
@@ -527,26 +527,26 @@ public class Dcpu16AssemlberParser extends Parser {
                     }
 
 
-                    pushFollow(FOLLOW_operation_value_in_operation546);
+                    pushFollow(FOLLOW_operation_value_in_operation547);
                     ov2=operation_value();
 
                     state._fsp--;
 
 
 
-                                    int opcode = Opcode.valueOf((basic_operation_code1!=null?input.toString(basic_operation_code1.start,basic_operation_code1.stop):null)).code;
+                                    int opcode = OpCode.valueOf((basic_operation_code1!=null?input.toString(basic_operation_code1.start,basic_operation_code1.stop):null)).code;
                                     int opvalue1 = ov1.get(0);
                                     int opvalue2 = ov2.get(0);
                                     
                                     //Some assertions
-                                    if(opcode > 0xF) {
-                                        throw new RuntimeException("Opcode bigger than "+ 0xF +", SHOULD NEVER HAPPEN!");
+                                    if(opcode > OpCode.BIT_MASK_BASIC) {
+                                        throw new RuntimeException("Opcode bigger than "+ OpCode.BIT_MASK_BASIC +", SHOULD NEVER HAPPEN!");
                                     }
-                                    else if(opvalue1 > 0x3F) {
-                                        throw new RuntimeException("Opvalue1 bigger than "+ 0x3F +", SHOULD NEVER HAPPEN!");
+                                    else if(opvalue1 > OpValueCode.BIT_MASK) {
+                                        throw new RuntimeException("Opvalue1 bigger than "+ OpValueCode.BIT_MASK +", SHOULD NEVER HAPPEN!");
                                     }
-                                    else if(opvalue2 > 0x3F) {
-                                        throw new RuntimeException("Opvalue2 bigger than "+ 0x3F +", SHOULD NEVER HAPPEN!");
+                                    else if(opvalue2 > OpValueCode.BIT_MASK) {
+                                        throw new RuntimeException("Opvalue2 bigger than "+ OpValueCode.BIT_MASK +", SHOULD NEVER HAPPEN!");
                                     }
                                     opvalue1 = opvalue1 << 4;
                                     opvalue2 = opvalue2 << 10;
@@ -567,30 +567,30 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 2 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:158:9: non_basic_operation_code WS ov= operation_value
                     {
-                    pushFollow(FOLLOW_non_basic_operation_code_in_operation570);
+                    pushFollow(FOLLOW_non_basic_operation_code_in_operation571);
                     non_basic_operation_code2=non_basic_operation_code();
 
                     state._fsp--;
 
 
-                    match(input,WS,FOLLOW_WS_in_operation572); 
+                    match(input,WS,FOLLOW_WS_in_operation573); 
 
-                    pushFollow(FOLLOW_operation_value_in_operation576);
+                    pushFollow(FOLLOW_operation_value_in_operation577);
                     ov=operation_value();
 
                     state._fsp--;
 
 
 
-                                    int opcode = Opcode.valueOf((non_basic_operation_code2!=null?input.toString(non_basic_operation_code2.start,non_basic_operation_code2.stop):null)).code;
+                                    int opcode = OpCode.valueOf((non_basic_operation_code2!=null?input.toString(non_basic_operation_code2.start,non_basic_operation_code2.stop):null)).code;
                                     int opvalue = ov.get(0);
                                     
                                     //Some assertions
-                                    if(opcode > 0x3FF) {
-                                        throw new RuntimeException("Opcode bigger than "+ 0x3FF +" (in non-basic operation), SHOULD NEVER HAPPEN!");
+                                    if(opcode > OpCode.BIT_MASK_NON_BASIC) {
+                                        throw new RuntimeException("Opcode bigger than "+ OpCode.BIT_MASK_NON_BASIC +" (in non-basic operation), SHOULD NEVER HAPPEN!");
                                     }
-                                    else if(opvalue > 0x3F) {
-                                        throw new RuntimeException("Opvalue1 bigger than "+ 0x3F +" (in non-basic operation), SHOULD NEVER HAPPEN!");
+                                    else if(opvalue > OpValueCode.BIT_MASK) {
+                                        throw new RuntimeException("Opvalue1 bigger than "+ OpValueCode.BIT_MASK +" (in non-basic operation), SHOULD NEVER HAPPEN!");
                                     }
                                     
                                     opvalue = opvalue << 10;
@@ -680,7 +680,7 @@ public class Dcpu16AssemlberParser extends Parser {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:201:5: ( JSR )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:201:9: JSR
             {
-            match(input,JSR,FOLLOW_JSR_in_non_basic_operation_code768); 
+            match(input,JSR,FOLLOW_JSR_in_non_basic_operation_code769); 
 
             }
 
@@ -709,9 +709,9 @@ public class Dcpu16AssemlberParser extends Parser {
 
 
         Token LABEL_IDENTIFIER3=null;
-        InstructionValue e1 =null;
+        OpValueCode e1 =null;
 
-        InstructionValue e2 =null;
+        OpValueCode e2 =null;
 
         int[] e3 =null;
 
@@ -831,7 +831,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:208:9: e1= register
                     {
-                    pushFollow(FOLLOW_register_in_operation_value810);
+                    pushFollow(FOLLOW_register_in_operation_value811);
                     e1=register();
 
                     state._fsp--;
@@ -846,7 +846,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 2 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:212:9: e2= dereferenced_register
                     {
-                    pushFollow(FOLLOW_dereferenced_register_in_operation_value836);
+                    pushFollow(FOLLOW_dereferenced_register_in_operation_value837);
                     e2=dereferenced_register();
 
                     state._fsp--;
@@ -861,7 +861,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 3 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:216:9: e3= dereferenced_register_with_offset
                     {
-                    pushFollow(FOLLOW_dereferenced_register_with_offset_in_operation_value862);
+                    pushFollow(FOLLOW_dereferenced_register_with_offset_in_operation_value863);
                     e3=dereferenced_register_with_offset();
 
                     state._fsp--;
@@ -877,7 +877,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 4 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:221:9: e4= literal_value
                     {
-                    pushFollow(FOLLOW_literal_value_in_operation_value888);
+                    pushFollow(FOLLOW_literal_value_in_operation_value889);
                     e4=literal_value();
 
                     state._fsp--;
@@ -888,10 +888,10 @@ public class Dcpu16AssemlberParser extends Parser {
                                         throw new RuntimeException("Negative literal value");
                                     }
                                     else if(e4 <= 0x1f) {
-                                        valueList.add(e4 + InstructionValue.LITERAL_OFFSET.code);
+                                        valueList.add(e4 + OpValueCode.LITERAL_OFFSET.code);
                                     }
                                     else {
-                                        valueList.add(InstructionValue.NEXT_WORD.code);
+                                        valueList.add(OpValueCode.NEXT_WORD.code);
                                         valueList.add(e4);
                                     }
                                 
@@ -901,7 +901,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 5 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:234:9: e5= dereferenced_literal_value
                     {
-                    pushFollow(FOLLOW_dereferenced_literal_value_in_operation_value914);
+                    pushFollow(FOLLOW_dereferenced_literal_value_in_operation_value915);
                     e5=dereferenced_literal_value();
 
                     state._fsp--;
@@ -912,7 +912,7 @@ public class Dcpu16AssemlberParser extends Parser {
                                         throw new RuntimeException("Negative dererenced literal value");
                                     }
                                     else {
-                                        valueList.add(InstructionValue.NEXT_WORD_DEREF.code);
+                                        valueList.add(OpValueCode.NEXT_WORD_DEREF.code);
                                         valueList.add(e5);
                                     }
                                 
@@ -922,10 +922,10 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 6 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:244:9: LABEL_IDENTIFIER
                     {
-                    LABEL_IDENTIFIER3=(Token)match(input,LABEL_IDENTIFIER,FOLLOW_LABEL_IDENTIFIER_in_operation_value938); 
+                    LABEL_IDENTIFIER3=(Token)match(input,LABEL_IDENTIFIER,FOLLOW_LABEL_IDENTIFIER_in_operation_value939); 
 
 
-                                    valueList.add(InstructionValue.NEXT_WORD.code);
+                                    valueList.add(OpValueCode.NEXT_WORD.code);
                                     
                                     String labelName = (LABEL_IDENTIFIER3!=null?LABEL_IDENTIFIER3.getText():null);
                                     if(identifiedLabels.containsKey(labelName)) {
@@ -939,7 +939,7 @@ public class Dcpu16AssemlberParser extends Parser {
                                         unidentifiedLabels.put(labelName, placeHolder);
                                         unidentifiedLabelsReverse.put(placeHolder, labelName);
                                         valueList.add(placeHolder);
-                                        System.err.println("Assigning placeholder '"+ placeHolder +"' to "+ labelName);
+                                        //System.err.println("Assigning placeholder '"+ placeHolder +"' to label '"+ labelName +"'.");
                                     }
                                 
 
@@ -963,30 +963,30 @@ public class Dcpu16AssemlberParser extends Parser {
 
 
     // $ANTLR start "dereferenced_register"
-    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:265:1: dereferenced_register returns [InstructionValue value] : LEFT_BLOCK_PARENTHESES e= dereferencable_register RIGHT_BLOCK_PARENTHESES ;
-    public final InstructionValue dereferenced_register() throws RecognitionException {
-        InstructionValue value = null;
+    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:265:1: dereferenced_register returns [OpValueCode value] : LEFT_BLOCK_PARENTHESES e= dereferencable_register RIGHT_BLOCK_PARENTHESES ;
+    public final OpValueCode dereferenced_register() throws RecognitionException {
+        OpValueCode value = null;
 
 
-        InstructionValue e =null;
+        OpValueCode e =null;
 
 
         try {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:266:5: ( LEFT_BLOCK_PARENTHESES e= dereferencable_register RIGHT_BLOCK_PARENTHESES )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:266:9: LEFT_BLOCK_PARENTHESES e= dereferencable_register RIGHT_BLOCK_PARENTHESES
             {
-            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register975); 
+            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register976); 
 
-            pushFollow(FOLLOW_dereferencable_register_in_dereferenced_register979);
+            pushFollow(FOLLOW_dereferencable_register_in_dereferenced_register980);
             e=dereferencable_register();
 
             state._fsp--;
 
 
-            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register981); 
+            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register982); 
 
 
-                            value = InstructionValue.getDerefOf(e);
+                            value = OpValueCode.getDerefOf(e);
                         
 
             }
@@ -1014,34 +1014,34 @@ public class Dcpu16AssemlberParser extends Parser {
 
         int e1 =0;
 
-        InstructionValue e2 =null;
+        OpValueCode e2 =null;
 
 
         try {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:273:5: ( LEFT_BLOCK_PARENTHESES e1= literal_value PLUS e2= dereferencable_register RIGHT_BLOCK_PARENTHESES )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:273:9: LEFT_BLOCK_PARENTHESES e1= literal_value PLUS e2= dereferencable_register RIGHT_BLOCK_PARENTHESES
             {
-            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1018); 
+            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1019); 
 
-            pushFollow(FOLLOW_literal_value_in_dereferenced_register_with_offset1022);
+            pushFollow(FOLLOW_literal_value_in_dereferenced_register_with_offset1023);
             e1=literal_value();
 
             state._fsp--;
 
 
-            match(input,PLUS,FOLLOW_PLUS_in_dereferenced_register_with_offset1024); 
+            match(input,PLUS,FOLLOW_PLUS_in_dereferenced_register_with_offset1025); 
 
-            pushFollow(FOLLOW_dereferencable_register_in_dereferenced_register_with_offset1028);
+            pushFollow(FOLLOW_dereferencable_register_in_dereferenced_register_with_offset1029);
             e2=dereferencable_register();
 
             state._fsp--;
 
 
-            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1030); 
+            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1031); 
 
 
                             values = new int[2];
-                            values[0] = InstructionValue.getRegPlusNextWordDerefOf(e2).code;
+                            values[0] = OpValueCode.getRegPlusNextWordDerefOf(e2).code;
                             values[1] = e1;
                         
 
@@ -1063,9 +1063,9 @@ public class Dcpu16AssemlberParser extends Parser {
 
 
     // $ANTLR start "register"
-    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:281:1: register returns [InstructionValue value] : (e= dereferencable_register | POP | PEEK | PUSH | SP | PC | O );
-    public final InstructionValue register() throws RecognitionException {
-        InstructionValue value = null;
+    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:281:1: register returns [OpValueCode value] : (e= dereferencable_register | POP | PEEK | PUSH | SP | PC | O );
+    public final OpValueCode register() throws RecognitionException {
+        OpValueCode value = null;
 
 
         Token POP4=null;
@@ -1074,7 +1074,7 @@ public class Dcpu16AssemlberParser extends Parser {
         Token SP7=null;
         Token PC8=null;
         Token O9=null;
-        InstructionValue e =null;
+        OpValueCode e =null;
 
 
         try {
@@ -1135,7 +1135,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:282:9: e= dereferencable_register
                     {
-                    pushFollow(FOLLOW_dereferencable_register_in_register1069);
+                    pushFollow(FOLLOW_dereferencable_register_in_register1070);
                     e=dereferencable_register();
 
                     state._fsp--;
@@ -1148,54 +1148,54 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 2 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:283:9: POP
                     {
-                    POP4=(Token)match(input,POP,FOLLOW_POP_in_register1081); 
+                    POP4=(Token)match(input,POP,FOLLOW_POP_in_register1082); 
 
-                     value = InstructionValue.valueOf((POP4!=null?POP4.getText():null)); 
+                     value = OpValueCode.valueOf((POP4!=null?POP4.getText():null)); 
 
                     }
                     break;
                 case 3 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:284:9: PEEK
                     {
-                    PEEK5=(Token)match(input,PEEK,FOLLOW_PEEK_in_register1093); 
+                    PEEK5=(Token)match(input,PEEK,FOLLOW_PEEK_in_register1094); 
 
-                     value = InstructionValue.valueOf((PEEK5!=null?PEEK5.getText():null)); 
+                     value = OpValueCode.valueOf((PEEK5!=null?PEEK5.getText():null)); 
 
                     }
                     break;
                 case 4 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:285:9: PUSH
                     {
-                    PUSH6=(Token)match(input,PUSH,FOLLOW_PUSH_in_register1105); 
+                    PUSH6=(Token)match(input,PUSH,FOLLOW_PUSH_in_register1106); 
 
-                     value = InstructionValue.valueOf((PUSH6!=null?PUSH6.getText():null)); 
+                     value = OpValueCode.valueOf((PUSH6!=null?PUSH6.getText():null)); 
 
                     }
                     break;
                 case 5 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:286:9: SP
                     {
-                    SP7=(Token)match(input,SP,FOLLOW_SP_in_register1117); 
+                    SP7=(Token)match(input,SP,FOLLOW_SP_in_register1118); 
 
-                     value = InstructionValue.valueOf((SP7!=null?SP7.getText():null)); 
+                     value = OpValueCode.valueOf((SP7!=null?SP7.getText():null)); 
 
                     }
                     break;
                 case 6 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:287:9: PC
                     {
-                    PC8=(Token)match(input,PC,FOLLOW_PC_in_register1129); 
+                    PC8=(Token)match(input,PC,FOLLOW_PC_in_register1130); 
 
-                     value = InstructionValue.valueOf((PC8!=null?PC8.getText():null)); 
+                     value = OpValueCode.valueOf((PC8!=null?PC8.getText():null)); 
 
                     }
                     break;
                 case 7 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:288:9: O
                     {
-                    O9=(Token)match(input,O,FOLLOW_O_in_register1141); 
+                    O9=(Token)match(input,O,FOLLOW_O_in_register1142); 
 
-                     value = InstructionValue.valueOf((O9!=null?O9.getText():null)); 
+                     value = OpValueCode.valueOf((O9!=null?O9.getText():null)); 
 
                     }
                     break;
@@ -1217,9 +1217,9 @@ public class Dcpu16AssemlberParser extends Parser {
 
 
     // $ANTLR start "dereferencable_register"
-    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:291:1: dereferencable_register returns [InstructionValue value] : ( A | B | C | X | Y | Z | I | J );
-    public final InstructionValue dereferencable_register() throws RecognitionException {
-        InstructionValue value = null;
+    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:291:1: dereferencable_register returns [OpValueCode value] : ( A | B | C | X | Y | Z | I | J );
+    public final OpValueCode dereferencable_register() throws RecognitionException {
+        OpValueCode value = null;
 
 
         Token A10=null;
@@ -1287,72 +1287,72 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:292:9: A
                     {
-                    A10=(Token)match(input,A,FOLLOW_A_in_dereferencable_register1166); 
+                    A10=(Token)match(input,A,FOLLOW_A_in_dereferencable_register1167); 
 
-                     value = InstructionValue.valueOf((A10!=null?A10.getText():null)); 
+                     value = OpValueCode.valueOf((A10!=null?A10.getText():null)); 
 
                     }
                     break;
                 case 2 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:293:9: B
                     {
-                    B11=(Token)match(input,B,FOLLOW_B_in_dereferencable_register1178); 
+                    B11=(Token)match(input,B,FOLLOW_B_in_dereferencable_register1179); 
 
-                     value = InstructionValue.valueOf((B11!=null?B11.getText():null)); 
+                     value = OpValueCode.valueOf((B11!=null?B11.getText():null)); 
 
                     }
                     break;
                 case 3 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:294:9: C
                     {
-                    C12=(Token)match(input,C,FOLLOW_C_in_dereferencable_register1190); 
+                    C12=(Token)match(input,C,FOLLOW_C_in_dereferencable_register1191); 
 
-                     value = InstructionValue.valueOf((C12!=null?C12.getText():null)); 
+                     value = OpValueCode.valueOf((C12!=null?C12.getText():null)); 
 
                     }
                     break;
                 case 4 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:295:9: X
                     {
-                    X13=(Token)match(input,X,FOLLOW_X_in_dereferencable_register1202); 
+                    X13=(Token)match(input,X,FOLLOW_X_in_dereferencable_register1203); 
 
-                     value = InstructionValue.valueOf((X13!=null?X13.getText():null)); 
+                     value = OpValueCode.valueOf((X13!=null?X13.getText():null)); 
 
                     }
                     break;
                 case 5 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:296:9: Y
                     {
-                    Y14=(Token)match(input,Y,FOLLOW_Y_in_dereferencable_register1214); 
+                    Y14=(Token)match(input,Y,FOLLOW_Y_in_dereferencable_register1215); 
 
-                     value = InstructionValue.valueOf((Y14!=null?Y14.getText():null)); 
+                     value = OpValueCode.valueOf((Y14!=null?Y14.getText():null)); 
 
                     }
                     break;
                 case 6 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:297:9: Z
                     {
-                    Z15=(Token)match(input,Z,FOLLOW_Z_in_dereferencable_register1226); 
+                    Z15=(Token)match(input,Z,FOLLOW_Z_in_dereferencable_register1227); 
 
-                     value = InstructionValue.valueOf((Z15!=null?Z15.getText():null)); 
+                     value = OpValueCode.valueOf((Z15!=null?Z15.getText():null)); 
 
                     }
                     break;
                 case 7 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:298:9: I
                     {
-                    I16=(Token)match(input,I,FOLLOW_I_in_dereferencable_register1238); 
+                    I16=(Token)match(input,I,FOLLOW_I_in_dereferencable_register1239); 
 
-                     value = InstructionValue.valueOf((I16!=null?I16.getText():null)); 
+                     value = OpValueCode.valueOf((I16!=null?I16.getText():null)); 
 
                     }
                     break;
                 case 8 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:299:9: J
                     {
-                    J17=(Token)match(input,J,FOLLOW_J_in_dereferencable_register1250); 
+                    J17=(Token)match(input,J,FOLLOW_J_in_dereferencable_register1251); 
 
-                     value = InstructionValue.valueOf((J17!=null?J17.getText():null)); 
+                     value = OpValueCode.valueOf((J17!=null?J17.getText():null)); 
 
                     }
                     break;
@@ -1386,15 +1386,15 @@ public class Dcpu16AssemlberParser extends Parser {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:303:5: ( LEFT_BLOCK_PARENTHESES e= literal_value RIGHT_BLOCK_PARENTHESES )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:303:9: LEFT_BLOCK_PARENTHESES e= literal_value RIGHT_BLOCK_PARENTHESES
             {
-            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_literal_value1279); 
+            match(input,LEFT_BLOCK_PARENTHESES,FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_literal_value1280); 
 
-            pushFollow(FOLLOW_literal_value_in_dereferenced_literal_value1283);
+            pushFollow(FOLLOW_literal_value_in_dereferenced_literal_value1284);
             e=literal_value();
 
             state._fsp--;
 
 
-            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_literal_value1285); 
+            match(input,RIGHT_BLOCK_PARENTHESES,FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_literal_value1286); 
 
 
                             value = e;
@@ -1448,7 +1448,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 1 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:310:9: HEX_NUMBER
                     {
-                    HEX_NUMBER18=(Token)match(input,HEX_NUMBER,FOLLOW_HEX_NUMBER_in_literal_value1322); 
+                    HEX_NUMBER18=(Token)match(input,HEX_NUMBER,FOLLOW_HEX_NUMBER_in_literal_value1323); 
 
 
                                     value = Integer.parseInt((HEX_NUMBER18!=null?HEX_NUMBER18.getText():null).substring(2), 16);
@@ -1459,7 +1459,7 @@ public class Dcpu16AssemlberParser extends Parser {
                 case 2 :
                     // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:314:9: DEC_NUMBER
                     {
-                    DEC_NUMBER19=(Token)match(input,DEC_NUMBER,FOLLOW_DEC_NUMBER_in_literal_value1346); 
+                    DEC_NUMBER19=(Token)match(input,DEC_NUMBER,FOLLOW_DEC_NUMBER_in_literal_value1347); 
 
 
                                     value = Integer.parseInt((DEC_NUMBER19!=null?DEC_NUMBER19.getText():null));
@@ -1493,7 +1493,7 @@ public class Dcpu16AssemlberParser extends Parser {
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:321:5: ( LABEL_DECLARATION )
             // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:321:9: LABEL_DECLARATION
             {
-            LABEL_DECLARATION20=(Token)match(input,LABEL_DECLARATION,FOLLOW_LABEL_DECLARATION_in_label_declaration1379); 
+            LABEL_DECLARATION20=(Token)match(input,LABEL_DECLARATION,FOLLOW_LABEL_DECLARATION_in_label_declaration1380); 
 
 
                             String labelName = (LABEL_DECLARATION20!=null?LABEL_DECLARATION20.getText():null).substring(1);
@@ -1501,7 +1501,7 @@ public class Dcpu16AssemlberParser extends Parser {
                                 throw new RuntimeException("Label name '"+ labelName +"' already declared.");
                             }
                             identifiedLabels.put(labelName, wordCount);
-                            System.err.println("Assigning '"+ wordCount +"' to labelname '"+ labelName +"'.");
+                            //System.err.println("Assigning '"+ wordCount +"' to label '"+ labelName +"'.");
                         
 
             }
@@ -1736,64 +1736,64 @@ public class Dcpu16AssemlberParser extends Parser {
     }
  
 
-    public static final BitSet FOLLOW_statements_in_assembler_file348 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_assembler_file350 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_statement_in_statements407 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_NEWLINE_in_statements411 = new BitSet(new long[]{0x00000B7016379162L});
-    public static final BitSet FOLLOW_WS_in_statements415 = new BitSet(new long[]{0x0000000010000000L});
-    public static final BitSet FOLLOW_NEWLINE_in_statements418 = new BitSet(new long[]{0x00000B7016379162L});
-    public static final BitSet FOLLOW_statement_in_statements424 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_WS_in_statement450 = new BitSet(new long[]{0x0000097006379160L});
-    public static final BitSet FOLLOW_label_declaration_in_statement454 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_WS_in_statement456 = new BitSet(new long[]{0x0000097016179160L});
-    public static final BitSet FOLLOW_NEWLINE_in_statement459 = new BitSet(new long[]{0x0000020010000000L});
-    public static final BitSet FOLLOW_WS_in_statement462 = new BitSet(new long[]{0x0000097016179160L});
-    public static final BitSet FOLLOW_operation_in_statement470 = new BitSet(new long[]{0x0000020000000002L});
-    public static final BitSet FOLLOW_WS_in_statement472 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_basic_operation_code_in_operation531 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_WS_in_operation533 = new BitSet(new long[]{0x00003486E0C86A90L});
-    public static final BitSet FOLLOW_operation_value_in_operation537 = new BitSet(new long[]{0x0000000000000400L});
-    public static final BitSet FOLLOW_COMMA_in_operation539 = new BitSet(new long[]{0x00003686E0C86A90L});
-    public static final BitSet FOLLOW_WS_in_operation541 = new BitSet(new long[]{0x00003486E0C86A90L});
-    public static final BitSet FOLLOW_operation_value_in_operation546 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_non_basic_operation_code_in_operation570 = new BitSet(new long[]{0x0000020000000000L});
-    public static final BitSet FOLLOW_WS_in_operation572 = new BitSet(new long[]{0x00003486E0C86A90L});
-    public static final BitSet FOLLOW_operation_value_in_operation576 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_JSR_in_non_basic_operation_code768 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_register_in_operation_value810 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_dereferenced_register_in_operation_value836 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_dereferenced_register_with_offset_in_operation_value862 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_literal_value_in_operation_value888 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_dereferenced_literal_value_in_operation_value914 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LABEL_IDENTIFIER_in_operation_value938 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register975 = new BitSet(new long[]{0x0000340000084290L});
-    public static final BitSet FOLLOW_dereferencable_register_in_dereferenced_register979 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register981 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1018 = new BitSet(new long[]{0x0000000000002800L});
-    public static final BitSet FOLLOW_literal_value_in_dereferenced_register_with_offset1022 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_PLUS_in_dereferenced_register_with_offset1024 = new BitSet(new long[]{0x0000340000084290L});
-    public static final BitSet FOLLOW_dereferencable_register_in_dereferenced_register_with_offset1028 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1030 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_dereferencable_register_in_register1069 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_POP_in_register1081 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PEEK_in_register1093 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PUSH_in_register1105 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_SP_in_register1117 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_PC_in_register1129 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_O_in_register1141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_A_in_dereferencable_register1166 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_B_in_dereferencable_register1178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_C_in_dereferencable_register1190 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_X_in_dereferencable_register1202 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Y_in_dereferencable_register1214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_Z_in_dereferencable_register1226 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_I_in_dereferencable_register1238 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_J_in_dereferencable_register1250 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_literal_value1279 = new BitSet(new long[]{0x0000000000002800L});
-    public static final BitSet FOLLOW_literal_value_in_dereferenced_literal_value1283 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_literal_value1285 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_HEX_NUMBER_in_literal_value1322 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_DEC_NUMBER_in_literal_value1346 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_LABEL_DECLARATION_in_label_declaration1379 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_statements_in_assembler_file349 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_assembler_file351 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_statement_in_statements408 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_NEWLINE_in_statements412 = new BitSet(new long[]{0x00000B7016379162L});
+    public static final BitSet FOLLOW_WS_in_statements416 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_NEWLINE_in_statements419 = new BitSet(new long[]{0x00000B7016379162L});
+    public static final BitSet FOLLOW_statement_in_statements425 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_WS_in_statement451 = new BitSet(new long[]{0x0000097006379160L});
+    public static final BitSet FOLLOW_label_declaration_in_statement455 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_WS_in_statement457 = new BitSet(new long[]{0x0000097016179160L});
+    public static final BitSet FOLLOW_NEWLINE_in_statement460 = new BitSet(new long[]{0x0000020010000000L});
+    public static final BitSet FOLLOW_WS_in_statement463 = new BitSet(new long[]{0x0000097016179160L});
+    public static final BitSet FOLLOW_operation_in_statement471 = new BitSet(new long[]{0x0000020000000002L});
+    public static final BitSet FOLLOW_WS_in_statement473 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_basic_operation_code_in_operation532 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_WS_in_operation534 = new BitSet(new long[]{0x00003486E0C86A90L});
+    public static final BitSet FOLLOW_operation_value_in_operation538 = new BitSet(new long[]{0x0000000000000400L});
+    public static final BitSet FOLLOW_COMMA_in_operation540 = new BitSet(new long[]{0x00003686E0C86A90L});
+    public static final BitSet FOLLOW_WS_in_operation542 = new BitSet(new long[]{0x00003486E0C86A90L});
+    public static final BitSet FOLLOW_operation_value_in_operation547 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_non_basic_operation_code_in_operation571 = new BitSet(new long[]{0x0000020000000000L});
+    public static final BitSet FOLLOW_WS_in_operation573 = new BitSet(new long[]{0x00003486E0C86A90L});
+    public static final BitSet FOLLOW_operation_value_in_operation577 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_JSR_in_non_basic_operation_code769 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_register_in_operation_value811 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_dereferenced_register_in_operation_value837 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_dereferenced_register_with_offset_in_operation_value863 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_literal_value_in_operation_value889 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_dereferenced_literal_value_in_operation_value915 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LABEL_IDENTIFIER_in_operation_value939 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register976 = new BitSet(new long[]{0x0000340000084290L});
+    public static final BitSet FOLLOW_dereferencable_register_in_dereferenced_register980 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register982 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1019 = new BitSet(new long[]{0x0000000000002800L});
+    public static final BitSet FOLLOW_literal_value_in_dereferenced_register_with_offset1023 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_PLUS_in_dereferenced_register_with_offset1025 = new BitSet(new long[]{0x0000340000084290L});
+    public static final BitSet FOLLOW_dereferencable_register_in_dereferenced_register_with_offset1029 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_register_with_offset1031 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_dereferencable_register_in_register1070 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_POP_in_register1082 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PEEK_in_register1094 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PUSH_in_register1106 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_SP_in_register1118 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_PC_in_register1130 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_O_in_register1142 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_A_in_dereferencable_register1167 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_B_in_dereferencable_register1179 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_C_in_dereferencable_register1191 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_X_in_dereferencable_register1203 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Y_in_dereferencable_register1215 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_Z_in_dereferencable_register1227 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_I_in_dereferencable_register1239 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_J_in_dereferencable_register1251 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LEFT_BLOCK_PARENTHESES_in_dereferenced_literal_value1280 = new BitSet(new long[]{0x0000000000002800L});
+    public static final BitSet FOLLOW_literal_value_in_dereferenced_literal_value1284 = new BitSet(new long[]{0x0000000800000000L});
+    public static final BitSet FOLLOW_RIGHT_BLOCK_PARENTHESES_in_dereferenced_literal_value1286 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_HEX_NUMBER_in_literal_value1323 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_DEC_NUMBER_in_literal_value1347 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_LABEL_DECLARATION_in_label_declaration1380 = new BitSet(new long[]{0x0000000000000002L});
 
 }

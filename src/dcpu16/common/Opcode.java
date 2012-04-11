@@ -1,6 +1,9 @@
 package dcpu16.common;
 
-public enum Opcode {
+import java.util.HashMap;
+import java.util.Map;
+
+public enum OpCode {
 	
 	NON_BASIC_INSTR(0x0, "non-basic instruction"),
     SET(0x1, "SET a, b - sets a to b"),
@@ -21,15 +24,45 @@ public enum Opcode {
     
     //Non basic instruction
     JSR(0x10, "JSR a - pushes the address of the next instruction to the stack, then sets PC to a");
+
+	
+	public static final int BIT_MASK_BASIC = 0xF;		//4 bits
+	public static final int BIT_MASK_NON_BASIC = 0x3FF;	//10 bits
+	private static final Map<Integer,OpCode> OPCODE_MAP;
+	static {
+		OPCODE_MAP = new HashMap<Integer,OpCode>();
+		for(OpCode o : OpCode.values()) {
+			OPCODE_MAP.put(o.code, o);
+		}
+	}
 	
 	public int code;
 	public String description;
 	
-	private Opcode(int code, String description) {
+	private OpCode(int code, String description) {
 		this.code = code;
 		this.description = description;
 	}
 	
+	public boolean isBasicOpcode() {
+		return (!this.equals(NON_BASIC_INSTR) && !this.equals(JSR));
+	}
+	
+	public static OpCode getOpcodeFromWord(int word) {
+		int code = word & BIT_MASK_BASIC;
+		if(OPCODE_MAP.containsKey(code)) {
+			return OPCODE_MAP.get(code);
+		}
+		throw new RuntimeException("Unknown opcode '"+ code +"', SHOULD NEVER HAPPEN!");
+	}
+	
+	public static OpCode getNonBasicOpcodeFromWord(int word) {
+		int code = word & BIT_MASK_NON_BASIC;
+		if(OPCODE_MAP.containsKey(code)) {
+			return OPCODE_MAP.get(code);
+		}
+		throw new RuntimeException("Unknown non-basic opcode '"+ code +"', SHOULD NEVER HAPPEN!");
+	}
 	
 	/*
 	0x0: non-basic instruction - see below

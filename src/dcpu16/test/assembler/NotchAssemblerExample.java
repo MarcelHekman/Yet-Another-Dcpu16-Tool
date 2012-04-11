@@ -14,9 +14,8 @@ public class NotchAssemblerExample {
 	public void testNotchAssemblerExample() throws Exception {
 		Dcpu16Assembler dcpuAssembler = new Dcpu16Assembler();
 		InputStream input = ClassLoader.getSystemResourceAsStream("dcpu16/test/assembler/NotchExample.dasm");
-		dcpuAssembler.assembleInputStream(input);
-		//byte[] output = dcpuAssembler.assemleInputStream(input);
-		//dcpuAssembler.hexDump(output);
+		byte[] output = dcpuAssembler.assembleInputStream(input);
+		dcpuAssembler.hexDump(output);
 	}
 
 }
