@@ -24,7 +24,7 @@ public class Dcpu16ToolMain {
 		}
 		
 		String inputFilename = args[0];
-		File inputFile = new File(inputFilename, "r");
+		File inputFile = new File(inputFilename);
 		
 		if(! inputFile.exists()) {
 			System.err.println("Input file '"+ inputFilename +"' not found.");

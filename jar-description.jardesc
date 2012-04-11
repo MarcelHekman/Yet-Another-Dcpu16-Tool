@@ -11,6 +11,7 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.disassembler"/>
         <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.common"/>
         <javaElement handleIdentifier="=DCPU16/lib"/>
         <javaElement handleIdentifier="=DCPU16/src&lt;dcpu16.assembler"/>
