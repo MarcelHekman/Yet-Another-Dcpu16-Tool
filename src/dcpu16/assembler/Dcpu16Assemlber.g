@@ -53,6 +53,9 @@ import dcpu16.common.OpValueCode;
 } 
 @lexer::header{
 package dcpu16.assembler;
+
+import java.util.HashMap;
+import java.util.Map;
 }
 @members {
 /* Map label name to OperationValue */
@@ -64,10 +67,65 @@ Map<String,Operation> labelOperationMap = new HashMap<String,Operation>();
 int wordCount = 0;
 }
 
+@lexer::members {
+Map<String, Integer> caseInsensitiveKeywords = new HashMap<String,Integer>() {{
+        //Instructions
+        put("SET", SET);
+        put("ADD", ADD); 
+        put("SUB", SUB); 
+        put("MUL", MUL); 
+        put("DIV", DIV);
+        put("MOD", MOD);
+        put("SHL", SHL);
+        put("SHR", SHR);
+        put("AND", AND);
+        put("BOR", BOR);
+        put("XOR", XOR);
+        put("IFE", IFE);
+        put("IFN", IFN);
+        put("IFG", IFG);
+        put("IFB", IFB);
+        put("JSR", JSR);
+            
+        //Register names
+        put("A", A);
+        put("B", B);
+        put("C", C);
+        put("X", X);
+        put("Y", Y);
+        put("Z", Z);
+        put("I", I);
+        put("J", J);
+        put("POP", POP);
+        put("PEEK", PEEK);
+        put("PUSH", PUSH);
+        put("SP", SP);
+        put("PC", PC);
+        put("O", O);
+  }};
+
+
+private int checkKeywordsTable(String lexeme)
+{
+    lexeme = lexeme.toUpperCase();
+    if(caseInsensitiveKeywords.containsKey(lexeme)) {
+        return caseInsensitiveKeywords.get(lexeme);
+    }
+    else {
+        return LABEL_IDENTIFIER;
+    }
+}
+}
+
 
 /* ########## Parser section ########## */
 
 assembler_file returns [List<Operation> outputList]
+            @init {
+                unidentifiedLabels.clear();
+                identifiedLabels.clear();
+                labelOperationMap.clear();
+            }
     :   stmts=statements EOF
             {
                 //Determine the real values of the labels (somewhat complicated to use short form labels)
@@ -102,11 +160,11 @@ statements returns [List<Operation> valueList]
             @init {
                 valueList = new ArrayList<Operation>();
             }
-    :   (s1=statement { valueList.add(s1); } NEWLINE | WS? NEWLINE)+ s2=statement? { valueList.add(s2); }
+    :   (s1=statement { valueList.add(s1); } NEWLINE | WS? NEWLINE)+ s2=statement? { if(s2 != null) {valueList.add(s2);} }
     ;
 
 statement returns [Operation value]
-    :   WS? (lbl=label_declaration WS (NEWLINE+ WS)*)? op=operation WS?
+    :   WS? (lbl=label_declaration NEWLINE? WS (NEWLINE+ WS)*)? op=operation WS?
             {
                 if(lbl != null) {
                     op.setLabel(lbl);
@@ -120,7 +178,7 @@ statement returns [Operation value]
 operation returns [Operation value]
     :   basic_operation_code WS ov1=operation_value COMMA WS? ov2=operation_value
             {
-                OpCode opcode = OpCode.valueOf($basic_operation_code.text);
+                OpCode opcode = OpCode.valueOf($basic_operation_code.text.toUpperCase());
                 OperationValue opvalue1 = ov1;
                 OperationValue opvalue2 = ov2;
                 
@@ -138,7 +196,7 @@ operation returns [Operation value]
             }
     |   non_basic_operation_code WS ov=operation_value
             {
-                OpCode opcode = OpCode.valueOf($non_basic_operation_code.text);
+                OpCode opcode = OpCode.valueOf($non_basic_operation_code.text.toUpperCase());
                 OperationValue opvalue = ov;
                 
                 //Some assertions
@@ -241,23 +299,23 @@ dereferenced_register_with_offset returns [OperationValue value]
 
 register returns [OpValueCode value]
     :   e=dereferencable_register { $value = e; }
-    |   POP { $value = OpValueCode.valueOf($POP.text); }
-    |   PEEK { $value = OpValueCode.valueOf($PEEK.text); }
-    |   PUSH { $value = OpValueCode.valueOf($PUSH.text); }
-    |   SP { $value = OpValueCode.valueOf($SP.text); }
-    |   PC { $value = OpValueCode.valueOf($PC.text); }
-    |   O { $value = OpValueCode.valueOf($O.text); }
+    |   POP { $value = OpValueCode.valueOf($POP.text.toUpperCase()); }
+    |   PEEK { $value = OpValueCode.valueOf($PEEK.text.toUpperCase()); }
+    |   PUSH { $value = OpValueCode.valueOf($PUSH.text.toUpperCase()); }
+    |   SP { $value = OpValueCode.valueOf($SP.text.toUpperCase()); }
+    |   PC { $value = OpValueCode.valueOf($PC.text.toUpperCase()); }
+    |   O { $value = OpValueCode.valueOf($O.text.toUpperCase()); }
     ;
 
 dereferencable_register returns [OpValueCode value]
-    :   A { $value = OpValueCode.valueOf($A.text); }
-    |   B { $value = OpValueCode.valueOf($B.text); }
-    |   C { $value = OpValueCode.valueOf($C.text); }
-    |   X { $value = OpValueCode.valueOf($X.text); }
-    |   Y { $value = OpValueCode.valueOf($Y.text); }
-    |   Z { $value = OpValueCode.valueOf($Z.text); }
-    |   I { $value = OpValueCode.valueOf($I.text); }
-    |   J { $value = OpValueCode.valueOf($J.text); }
+    :   A { $value = OpValueCode.valueOf($A.text.toUpperCase()); }
+    |   B { $value = OpValueCode.valueOf($B.text.toUpperCase()); }
+    |   C { $value = OpValueCode.valueOf($C.text.toUpperCase()); }
+    |   X { $value = OpValueCode.valueOf($X.text.toUpperCase()); }
+    |   Y { $value = OpValueCode.valueOf($Y.text.toUpperCase()); }
+    |   Z { $value = OpValueCode.valueOf($Z.text.toUpperCase()); }
+    |   I { $value = OpValueCode.valueOf($I.text.toUpperCase()); }
+    |   J { $value = OpValueCode.valueOf($J.text.toUpperCase()); }
     ;
     
 dereferenced_literal_value returns [int value]
@@ -365,6 +423,9 @@ LABEL_DECLARATION
     ;
 
 LABEL_IDENTIFIER
-    :   ('a'..'z')+
+    :   ('a'..'z'|'A'..'Z') ('a'..'z'|'A'..'Z'|'_')*
+            {
+                $type = checkKeywordsTable(getText());
+            }
     ;
     
