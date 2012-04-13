@@ -65,34 +65,16 @@ public class Dcpu16Disassembler {
 		OpCode opcode = OpCode.getOpcodeFromWord(word);
 		Operation operation;
 		if(opcode.isBasicOpcode()) {
-			operation = new Operation(opcode);
-			operation.setOpval1( processOpValue(OpValueCode.getOpval1(word)) );
-			operation.setOpval2( processOpValue(OpValueCode.getOpval2(word)) );
+			OperationValue opv1 = processOpValue(OpValueCode.getOpval1(word));
+			OperationValue opv2 = processOpValue(OpValueCode.getOpval2(word));
+			operation = new Operation(opcode, opv1, opv2);
 		}
 		else {
 			opcode = OpCode.getNonBasicOpcodeFromWord(word);
-			operation = new Operation(opcode);
-			operation.setOpval1( processOpValue(OpValueCode.getOpval1(word)) );
+			OperationValue opv = processOpValue(OpValueCode.getOpval2(word));
+			operation = new Operation(opcode, opv);
 		}
 		return operation;
-		/*
-		output.append("        ");
-		if(! opcode.equals(OpCode.NON_BASIC_INSTR)) {
-			output.append(opcode.name());
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval1(word));
-			output.append(',');
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval2(word));
-		}
-		else {
-			opcode = OpCode.getNonBasicOpcodeFromWord(word);
-			output.append(opcode.name());
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval2(word));
-		}
-		output.append("\n");
-		*/
 	}
 	
 	private OperationValue processOpValue(int instructionCode) throws Exception {
@@ -109,89 +91,4 @@ public class Dcpu16Disassembler {
 			return new OperationValue(opValueCode);
 		}
 	}
-	
-	
-	/*
-	private void processWord(StringBuilder output, int word) throws Exception {
-		OpCode opcode = OpCode.getOpcodeFromWord(word);
-
-		output.append("        ");
-		if(! opcode.equals(OpCode.NON_BASIC_INSTR)) {
-			output.append(opcode.name());
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval1(word));
-			output.append(',');
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval2(word));
-		}
-		else {
-			opcode = OpCode.getNonBasicOpcodeFromWord(word);
-			output.append(opcode.name());
-			output.append(' ');
-			processInstructionValue(output, OpValue.getOpval2(word));
-		}
-		output.append("\n");
-	}
-	
-	private void processInstructionValue(StringBuilder output, int instructionCode) throws Exception {
-		OpValue instructionValue = OpValue.getInstructionValue(instructionCode);
-		switch(instructionValue) {
-		case LITERAL_OFFSET: {
-			output.append(toHex(instructionCode - OpValue.LITERAL_OFFSET.code));
-			break;
-		}
-		case NEXT_WORD: {
-			output.append(toHex(getNextWord()));
-			break;
-		}
-		case NEXT_WORD_DEREF: {
-			output.append('[');
-			output.append(toHex(getNextWord()));
-			output.append(']');
-			break;
-		}
-		case A_DEREF: 
-		case B_DEREF:
-		case C_DEREF:
-		case X_DEREF:
-		case Y_DEREF:
-		case Z_DEREF:
-		case I_DEREF:
-		case J_DEREF: {
-			output.append('[');
-			output.append(OpValue.getNonDerefOf(instructionValue).name());
-			output.append(']');
-			break;
-		}
-			
-		case A_PLUS_NW_DEREF:
-		case B_PLUS_NW_DEREF:
-		case C_PLUS_NW_DEREF:
-		case X_PLUS_NW_DEREF:
-		case Y_PLUS_NW_DEREF:
-		case Z_PLUS_NW_DEREF:
-		case I_PLUS_NW_DEREF:
-		case J_PLUS_NW_DEREF: {
-			output.append('[');
-			output.append(toHex(getNextWord()));
-			output.append('+');
-			output.append(OpValue.getNonDerefOf(instructionValue).name());
-			output.append(']');
-			break;
-		}
-		default: {
-			output.append(instructionValue.name());
-			if(instructionValue.usesNextWord()) {
-				throw new RuntimeException("Unhandled 'next word' case, during disassembly, word: '"+ instructionValue.name() +"'.");
-				//getNextWord();
-			}
-			break;
-		}
-		}
-	}
-	
-	private String toHex(int number) {
-		return "0x"+ Integer.toHexString(number);
-	}
-	*/
 }

@@ -47,26 +47,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dcpu16.common.OpCode;
+import dcpu16.common.Operation;
+import dcpu16.common.OperationValue;
 import dcpu16.common.OpValueCode;
 } 
 @lexer::header{
 package dcpu16.assembler;
 }
 @members {
-/* Map label name to Integer */
-Map<String,Integer> identifiedLabels = new HashMap<String,Integer>();
-Map<String,Integer> unidentifiedLabels = new HashMap<String,Integer>();
-Map<Integer,String> unidentifiedLabelsReverse = new HashMap<Integer,String>();
-
-/* Use negative numbers for unidentified labels */
-final int UNKOWN_LABEL_START_INDEX = -1;
-int unknownLabelPlaceholder = UNKOWN_LABEL_START_INDEX;
-
-private int getNewLabelPlaceHolder() {
-    int temp = unknownLabelPlaceholder;
-    unknownLabelPlaceholder--;
-    return temp;
-}
+/* Map label name to OperationValue */
+Map<String,OperationValue> unidentifiedLabels = new HashMap<String,OperationValue>();
+Map<String,OperationValue> identifiedLabels = new HashMap<String,OperationValue>();
+Map<String,Operation> labelOperationMap = new HashMap<String,Operation>();
 
 /* For the label value */
 int wordCount = 0;
@@ -75,107 +67,88 @@ int wordCount = 0;
 
 /* ########## Parser section ########## */
 
-assembler_file returns [byte[\] binaryOutput]
-    :   s=statements EOF
+assembler_file returns [List<Operation> outputList]
+    :   stmts=statements EOF
             {
-                binaryOutput = new byte[s.size() * 2];
-                
-                /* Fix unidentified labels */
-                for(int i = 0; i < s.size(); i++) {
-                    int value = s.get(i);
-                    int realValue;
-                    if(value < 0) {
-                        if(!unidentifiedLabelsReverse.containsKey(value)) {
-                            throw new RuntimeException("Word value '"+ value +"' is not a valid value and is not a valid 'label placeholder', SHOULD NEVER HAPPEN!");
+                //Determine the real values of the labels (somewhat complicated to use short form labels)
+                boolean needsLabelSizeCheck = true;
+                while(needsLabelSizeCheck) {
+                    needsLabelSizeCheck = false;
+                    int currentWordCount = 0;
+                    for(Operation stmt : stmts) {
+                        if(stmt.hasLabel()) {
+                            String label = stmt.getLabel();
+                            OperationValue operationValue = identifiedLabels.get(label);
+                            int labelAdressValue = operationValue.getLiteral();
+                            if(labelAdressValue != currentWordCount) {
+                                System.err.println("Adjusting label: "+ label +" from "+ labelAdressValue +" to "+ currentWordCount);
+                                if(labelAdressValue < OpValueCode.LITERAL_OFFSET.code) {
+                                    operationValue.set(OpValueCode.LITERAL_OFFSET, currentWordCount);
+                                }
+                                else {
+                                    operationValue.set(OpValueCode.NEXT_WORD, currentWordCount);
+                                }
+                                needsLabelSizeCheck = true;
+                            }
                         }
-                        String labelName = unidentifiedLabelsReverse.get(value);
-                        realValue = identifiedLabels.get(labelName);
-                        //System.err.println("Replacing label '"+ labelName +"' value "+ value +" with "+ realValue +".");
+                        currentWordCount += stmt.wordCount();
                     }
-                    else if(value > 0xFFFF) {
-                        throw new RuntimeException("Word value '"+ value +"' exceeds maximum of '"+ 0xFFFF +"', SHOULD NEVER HAPPEN!");
-                    }
-                    else {
-                        realValue = value;
-                    }
-                    
-                    //Convert 'unsigned short' values to a Big-endian byte array.
-                    byte[] output = new byte[ input.size() * 2 ];
-                    binaryOutput[(i * 2)] = (byte)((realValue & 0xFF00) >> 8);
-                    binaryOutput[(i * 2) + 1] = (byte)(realValue & 0x00FF);
                 }
+                outputList = stmts;
             }
     ;
 
-statements returns [List<Integer> valueList]
+statements returns [List<Operation> valueList]
             @init {
-                valueList = new ArrayList<Integer>();
+                valueList = new ArrayList<Operation>();
             }
-    :   (s1=statement { valueList.addAll(s1); } NEWLINE | WS? NEWLINE)+ s2=statement? { valueList.addAll(s2); }
+    :   (s1=statement { valueList.add(s1); } NEWLINE | WS? NEWLINE)+ s2=statement? { valueList.add(s2); }
     ;
 
-statement returns [List<Integer> valueList]
-    :   WS? (label_declaration WS (NEWLINE+ WS)*)? opList=operation WS?
+statement returns [Operation value]
+    :   WS? (lbl=label_declaration WS (NEWLINE+ WS)*)? op=operation WS?
             {
-                valueList = opList;
-                wordCount += opList.size();
+                if(lbl != null) {
+                    op.setLabel(lbl);
+                    labelOperationMap.put(lbl, op); 
+                }
+                value = op;
+                wordCount += op.wordCount();
             }
     ;
     
-operation returns [List<Integer> valueList]
-            @init {
-                valueList = new ArrayList<Integer>();
-            }
+operation returns [Operation value]
     :   basic_operation_code WS ov1=operation_value COMMA WS? ov2=operation_value
             {
-                int opcode = OpCode.valueOf($basic_operation_code.text).code;
-                int opvalue1 = ov1.get(0);
-                int opvalue2 = ov2.get(0);
+                OpCode opcode = OpCode.valueOf($basic_operation_code.text);
+                OperationValue opvalue1 = ov1;
+                OperationValue opvalue2 = ov2;
                 
                 //Some assertions
-                if(opcode > OpCode.BIT_MASK_BASIC) {
+                if(opcode.code > OpCode.BIT_MASK_BASIC) {
                     throw new RuntimeException("Opcode bigger than "+ OpCode.BIT_MASK_BASIC +", SHOULD NEVER HAPPEN!");
                 }
-                else if(opvalue1 > OpValueCode.BIT_MASK) {
+                else if(opvalue1.getOpvalCode().code > OpValueCode.BIT_MASK) {
                     throw new RuntimeException("Opvalue1 bigger than "+ OpValueCode.BIT_MASK +", SHOULD NEVER HAPPEN!");
                 }
-                else if(opvalue2 > OpValueCode.BIT_MASK) {
+                else if(opvalue2.getOpvalCode().code > OpValueCode.BIT_MASK) {
                     throw new RuntimeException("Opvalue2 bigger than "+ OpValueCode.BIT_MASK +", SHOULD NEVER HAPPEN!");
                 }
-                opvalue1 = opvalue1 << 4;
-                opvalue2 = opvalue2 << 10;
-                int operation = opcode + opvalue1 + opvalue2;
-                valueList.add(operation);
-                
-                //Add remaining 'next word' values.
-                for(int i = 1; i < ov1.size(); i++) {
-                    valueList.add(ov1.get(i));
-                }
-                for(int i = 1; i < ov2.size(); i++) {
-                    valueList.add(ov2.get(i));
-                }
+                value = new Operation(opcode, opvalue1, opvalue2);
             }
     |   non_basic_operation_code WS ov=operation_value
             {
-                int opcode = OpCode.valueOf($non_basic_operation_code.text).code;
-                int opvalue = ov.get(0);
+                OpCode opcode = OpCode.valueOf($non_basic_operation_code.text);
+                OperationValue opvalue = ov;
                 
                 //Some assertions
-                if(opcode > OpCode.BIT_MASK_NON_BASIC) {
+                if(opcode.code > OpCode.BIT_MASK_NON_BASIC) {
                     throw new RuntimeException("Opcode bigger than "+ OpCode.BIT_MASK_NON_BASIC +" (in non-basic operation), SHOULD NEVER HAPPEN!");
                 }
-                else if(opvalue > OpValueCode.BIT_MASK) {
+                else if(opvalue.getOpvalCode().code > OpValueCode.BIT_MASK) {
                     throw new RuntimeException("Opvalue1 bigger than "+ OpValueCode.BIT_MASK +" (in non-basic operation), SHOULD NEVER HAPPEN!");
                 }
-                
-                opvalue = opvalue << 10;
-                int operation = opcode + opvalue;
-                valueList.add(operation);
-                
-                //Add remaining 'next word' values.
-                for(int i = 1; i < ov.size(); i++) {
-                    valueList.add(ov.get(i));
-                }
+                value = new Operation(opcode, opvalue);
             }
     ;
 
@@ -201,22 +174,18 @@ non_basic_operation_code
     :   JSR
     ;
 
-operation_value returns [List<Integer> valueList]
-            @init {
-                valueList = new ArrayList<Integer>();
-            }
+operation_value returns [OperationValue value]
     :   e1=register
             {
-                valueList.add(e1.code);
+                value = new OperationValue(e1);
             }
     |   e2=dereferenced_register
             {
-                valueList.add(e2.code);
+                value = new OperationValue(e2);
             }
     |   e3=dereferenced_register_with_offset
             {
-                valueList.add(e3[0]);
-                valueList.add(e3[1]);
+                value = e3;
             }
     |   e4=literal_value
             {
@@ -224,11 +193,10 @@ operation_value returns [List<Integer> valueList]
                     throw new RuntimeException("Negative literal value");
                 }
                 else if(e4 <= 0x1f) {
-                    valueList.add(e4 + OpValueCode.LITERAL_OFFSET.code);
+                    value = new OperationValue(OpValueCode.LITERAL_OFFSET, e4);
                 }
                 else {
-                    valueList.add(OpValueCode.NEXT_WORD.code);
-                    valueList.add(e4);
+                    value = new OperationValue(OpValueCode.NEXT_WORD, e4);
                 }
             }
     |   e5=dereferenced_literal_value
@@ -237,27 +205,22 @@ operation_value returns [List<Integer> valueList]
                     throw new RuntimeException("Negative dererenced literal value");
                 }
                 else {
-                    valueList.add(OpValueCode.NEXT_WORD_DEREF.code);
-                    valueList.add(e5);
+                    value = new OperationValue(OpValueCode.NEXT_WORD_DEREF, e5);
                 }
             }
     |   LABEL_IDENTIFIER
             {
-                valueList.add(OpValueCode.NEXT_WORD.code);
-                
                 String labelName = $LABEL_IDENTIFIER.text;
                 if(identifiedLabels.containsKey(labelName)) {
-                    valueList.add(identifiedLabels.get(labelName));
+                    value = identifiedLabels.get(labelName);
                 }
                 else if(unidentifiedLabels.containsKey(labelName)) {
-                    valueList.add(unidentifiedLabels.get(labelName));
+                    value = unidentifiedLabels.get(labelName);
                 }
                 else {
-                    int placeHolder = getNewLabelPlaceHolder();
-                    unidentifiedLabels.put(labelName, placeHolder);
-                    unidentifiedLabelsReverse.put(placeHolder, labelName);
-                    valueList.add(placeHolder);
-                    //System.err.println("Assigning placeholder '"+ placeHolder +"' to label '"+ labelName +"'.");
+                    //Place holder
+                    value = new OperationValue(OpValueCode.LITERAL_OFFSET, 0);
+                    unidentifiedLabels.put(labelName, value);
                 }
             }
     ;
@@ -269,12 +232,10 @@ dereferenced_register returns [OpValueCode value]
             }
     ;
 
-dereferenced_register_with_offset returns [int[\] values]
+dereferenced_register_with_offset returns [OperationValue value]
     :   LEFT_BLOCK_PARENTHESES e1=literal_value PLUS e2=dereferencable_register RIGHT_BLOCK_PARENTHESES
             {
-                $values = new int[2];
-                $values[0] = OpValueCode.getRegPlusNextWordDerefOf(e2).code;
-                $values[1] = e1;
+                $value = new OperationValue(OpValueCode.getRegPlusNextWordDerefOf(e2), e1);
             }
     ;
 
@@ -317,14 +278,34 @@ literal_value returns [int value]
             }
     ;
 
-label_declaration
+label_declaration returns [String value]
     :   LABEL_DECLARATION
             {
                 String labelName = $LABEL_DECLARATION.text.substring(1);
+                OperationValue operationValue;
                 if(identifiedLabels.containsKey(labelName)) {
                     throw new RuntimeException("Label name '"+ labelName +"' already declared.");
                 }
-                identifiedLabels.put(labelName, wordCount);
+                
+                //Determine short form or long form label values
+                OpValueCode ovc;
+                if(wordCount < OpValueCode.LITERAL_OFFSET.code) {
+                    ovc = OpValueCode.LITERAL_OFFSET;
+                }
+                else {
+                    ovc = OpValueCode.NEXT_WORD;
+                }
+                
+                if(unidentifiedLabels.containsKey(labelName)) {
+                    operationValue = unidentifiedLabels.get(labelName);
+                    operationValue.set(ovc, 0);
+                    unidentifiedLabels.remove(labelName);
+                }
+                else {
+                    operationValue = new OperationValue(ovc, 0);
+                }
+                identifiedLabels.put(labelName, operationValue);
+                value = labelName;
                 //System.err.println("Assigning '"+ wordCount +"' to label '"+ labelName +"'.");
             }
     ;

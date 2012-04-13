@@ -2,37 +2,46 @@ package dcpu16.common;
 
 public class OperationValue {
 
-	private final OpValueCode opvalCode;
-	private final int opvalLiteral;
+	private OpValueCode opvalCode;
+	private int literal;
 	
 
 	public OperationValue(OpValueCode code) {
+		set(code);
+	}
+	
+	public OperationValue(OpValueCode code, int literal) {
+		set(code, literal);
+	}
+	
+	
+	public void set(OpValueCode code) {
 		this.opvalCode = code;
-		this.opvalLiteral = -1;
+		this.literal = -1;
 		if(hasLiteralValue()) {
 			throw new RuntimeException("This OpValueCode '"+ opvalCode +"' uses a literal value and should use a different constructor, THIS SHOULD NEVER HAPPEN!");
 		}
 	}
 	
-	public OperationValue(OpValueCode code, int literal) {
+	public void set(OpValueCode code, int literal) {
 		this.opvalCode = code;
 		if(hasLiteralValue()) {
-			this.opvalLiteral = literal;
+			this.literal = literal;
 		}
 		else {
-			opvalLiteral = -1;
+			this.literal = -1;
 		}
 	}
 	
-	
+
 	public String toString() {
 		switch(opvalCode) {
 		case LITERAL_OFFSET:
 		case NEXT_WORD: {
-			return ByteUtil.toHex(opvalLiteral);
+			return ByteUtil.toHex(literal);
 		}
 		case NEXT_WORD_DEREF: {
-			return '['+ ByteUtil.toHex(opvalLiteral) +']';
+			return '['+ ByteUtil.toHex(literal) +']';
 		}
 		case A_DEREF: 
 		case B_DEREF:
@@ -52,7 +61,7 @@ public class OperationValue {
 		case Z_PLUS_NW_DEREF:
 		case I_PLUS_NW_DEREF:
 		case J_PLUS_NW_DEREF: {
-			return '['+ ByteUtil.toHex(opvalLiteral) +'+'+ OpValueCode.getNonDerefOf(opvalCode).name() +']';
+			return '['+ ByteUtil.toHex(literal) +'+'+ OpValueCode.getNonDerefOf(opvalCode).name() +']';
 		}
 		default: {
 			if(opvalCode.usesNextWord()) {
@@ -64,6 +73,26 @@ public class OperationValue {
 		}
 	}
 	
+	public int getBinaryFormatCode() {
+		if(opvalCode == OpValueCode.LITERAL_OFFSET) {
+			return OpValueCode.LITERAL_OFFSET.code + literal;
+		}
+		else {
+			return opvalCode.code;
+		}
+	}
+	
+	public int wordCount() {
+		if(opvalCode.usesNextWord()) {
+			return 1;
+		}
+		return 0;
+	}
+	
+	public boolean usesNextWord() {
+		return opvalCode.usesNextWord();
+	}
+	
 	public boolean hasLiteralValue() {
 		return opvalCode.usesLiteralValue();
 	}
@@ -72,10 +101,10 @@ public class OperationValue {
 		return opvalCode;
 	}
 
-	public int getOpvalLiteral() {
+	public int getLiteral() {
 		if(!hasLiteralValue()) {
 			throw new RuntimeException("This OpValueCode '"+ opvalCode +"' does not have an associated literal value, THIS SHOULD NEVER HAPPEN!");
 		}
-		return opvalLiteral;
+		return literal;
 	}
 }

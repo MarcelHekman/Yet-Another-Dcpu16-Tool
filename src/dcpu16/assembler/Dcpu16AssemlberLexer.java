@@ -1,4 +1,4 @@
-// $ANTLR 3.4 E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g 2012-04-11 17:02:39
+// $ANTLR 3.4 E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g 2012-04-13 02:01:09
 
 package dcpu16.assembler;
 
@@ -746,14 +746,14 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = HEX_NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:335:5: ( '0x' ( '0' .. '9' | 'A' .. 'F' )+ )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:335:9: '0x' ( '0' .. '9' | 'A' .. 'F' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:316:5: ( '0x' ( '0' .. '9' | 'A' .. 'F' )+ )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:316:9: '0x' ( '0' .. '9' | 'A' .. 'F' )+
             {
             match("0x"); 
 
 
 
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:335:14: ( '0' .. '9' | 'A' .. 'F' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:316:14: ( '0' .. '9' | 'A' .. 'F' )+
             int cnt1=0;
             loop1:
             do {
@@ -808,8 +808,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = DEC_NUMBER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:339:5: ( ( '0' .. '9' ) ( '0' .. '9' )* )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:339:9: ( '0' .. '9' ) ( '0' .. '9' )*
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:320:5: ( ( '0' .. '9' ) ( '0' .. '9' )* )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:320:9: ( '0' .. '9' ) ( '0' .. '9' )*
             {
             if ( (input.LA(1) >= '0' && input.LA(1) <= '9') ) {
                 input.consume();
@@ -821,7 +821,7 @@ public class Dcpu16AssemlberLexer extends Lexer {
             }
 
 
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:339:20: ( '0' .. '9' )*
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:320:20: ( '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -871,14 +871,14 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = MULTI_LINE_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:343:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:343:9: '/*' ( options {greedy=false; } : . )* '*/'
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:324:5: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:324:9: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
 
 
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:344:9: ( options {greedy=false; } : . )*
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:325:9: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -903,7 +903,7 @@ public class Dcpu16AssemlberLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:344:36: .
+            	    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:325:36: .
             	    {
             	    matchAny(); 
 
@@ -940,10 +940,10 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = LINE_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:5: ( ( '//' | ';' | '#' ) (~ ( '\\n' | '\\r' ) )* )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:9: ( '//' | ';' | '#' ) (~ ( '\\n' | '\\r' ) )*
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:5: ( ( '//' | ';' | '#' ) (~ ( '\\n' | '\\r' ) )* )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:9: ( '//' | ';' | '#' ) (~ ( '\\n' | '\\r' ) )*
             {
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:9: ( '//' | ';' | '#' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:9: ( '//' | ';' | '#' )
             int alt4=3;
             switch ( input.LA(1) ) {
             case '/':
@@ -971,7 +971,7 @@ public class Dcpu16AssemlberLexer extends Lexer {
 
             switch (alt4) {
                 case 1 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:10: '//'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:10: '//'
                     {
                     match("//"); 
 
@@ -980,14 +980,14 @@ public class Dcpu16AssemlberLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:15: ';'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:15: ';'
                     {
                     match(';'); 
 
                     }
                     break;
                 case 3 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:19: '#'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:19: '#'
                     {
                     match('#'); 
 
@@ -997,7 +997,7 @@ public class Dcpu16AssemlberLexer extends Lexer {
             }
 
 
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:24: (~ ( '\\n' | '\\r' ) )*
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:333:24: (~ ( '\\n' | '\\r' ) )*
             loop5:
             do {
                 int alt5=2;
@@ -1051,8 +1051,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = LEFT_BLOCK_PARENTHESES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:359:5: ( '[' )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:359:9: '['
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:340:5: ( '[' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:340:9: '['
             {
             match('['); 
 
@@ -1072,8 +1072,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = RIGHT_BLOCK_PARENTHESES;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:363:5: ( ']' )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:363:9: ']'
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:344:5: ( ']' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:344:9: ']'
             {
             match(']'); 
 
@@ -1093,8 +1093,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = COMMA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:367:5: ( ',' )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:367:9: ','
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:348:5: ( ',' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:348:9: ','
             {
             match(','); 
 
@@ -1114,8 +1114,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = PLUS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:371:5: ( '+' )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:371:9: '+'
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:5: ( '+' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:352:9: '+'
             {
             match('+'); 
 
@@ -1135,10 +1135,10 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = NEWLINE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:5: ( ( '\\r\\n' | '\\r' | '\\n' ) )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:9: ( '\\r\\n' | '\\r' | '\\n' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:5: ( ( '\\r\\n' | '\\r' | '\\n' ) )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:9: ( '\\r\\n' | '\\r' | '\\n' )
             {
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:9: ( '\\r\\n' | '\\r' | '\\n' )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:9: ( '\\r\\n' | '\\r' | '\\n' )
             int alt6=3;
             int LA6_0 = input.LA(1);
 
@@ -1164,7 +1164,7 @@ public class Dcpu16AssemlberLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:10: '\\r\\n'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:10: '\\r\\n'
                     {
                     match("\r\n"); 
 
@@ -1173,14 +1173,14 @@ public class Dcpu16AssemlberLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:17: '\\r'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:17: '\\r'
                     {
                     match('\r'); 
 
                     }
                     break;
                 case 3 :
-                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:375:22: '\\n'
+                    // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:356:22: '\\n'
                     {
                     match('\n'); 
 
@@ -1206,10 +1206,10 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:379:5: ( ( ' ' | '\\t' )+ )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:379:9: ( ' ' | '\\t' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:360:5: ( ( ' ' | '\\t' )+ )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:360:9: ( ' ' | '\\t' )+
             {
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:379:9: ( ' ' | '\\t' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:360:9: ( ' ' | '\\t' )+
             int cnt7=0;
             loop7:
             do {
@@ -1264,8 +1264,8 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = LABEL_DECLARATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:383:5: ( ':' LABEL_IDENTIFIER )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:383:9: ':' LABEL_IDENTIFIER
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:364:5: ( ':' LABEL_IDENTIFIER )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:364:9: ':' LABEL_IDENTIFIER
             {
             match(':'); 
 
@@ -1288,10 +1288,10 @@ public class Dcpu16AssemlberLexer extends Lexer {
         try {
             int _type = LABEL_IDENTIFIER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:387:5: ( ( 'a' .. 'z' )+ )
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:387:9: ( 'a' .. 'z' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:368:5: ( ( 'a' .. 'z' )+ )
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:368:9: ( 'a' .. 'z' )+
             {
-            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:387:9: ( 'a' .. 'z' )+
+            // E:\\utwente\\eclipse\\funstuff\\DCPU16\\src\\dcpu16\\assembler\\Dcpu16Assemlber.g:368:9: ( 'a' .. 'z' )+
             int cnt8=0;
             loop8:
             do {

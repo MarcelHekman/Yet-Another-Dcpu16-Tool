@@ -1,16 +1,57 @@
 package dcpu16.common;
 
+import java.util.List;
+
 public class Operation {
 	private final OpCode opcode;
-	private OperationValue opval1;
-	private OperationValue opval2;
+	private final OperationValue opval1;
+	private final OperationValue opval2;
 	private String label = null;
 	
 	
-	public Operation(OpCode opcode) {
+	public Operation(OpCode opcode, OperationValue opval) {
 		this.opcode = opcode;
+		if(isBasicOpcode()) {
+			throw new RuntimeException("Opcode does not fit this constructor, use the other constructor, THIS SHOULD NEVER HAPPEN!");
+		}
+		this.opval1 = opval;
+		this.opval2 = null;
+	}
+	
+	public Operation(OpCode opcode, OperationValue opval1, OperationValue opval2) {
+		this.opcode = opcode;
+		if(!isBasicOpcode()) {
+			throw new RuntimeException("Opcode does not fit this constructor, use the other constructor, THIS SHOULD NEVER HAPPEN!");
+		}
+		this.opval1 = opval1;
+		this.opval2 = opval2;
 	}
 
+	
+	public void getBinaryFormat(List<Integer> binaryFormat) {
+		if(isBasicOpcode()) {
+			binaryFormat.add(opcode.code + (opval1.getBinaryFormatCode() << 4) + (opval2.getBinaryFormatCode() << 10));
+		}
+		else {
+			binaryFormat.add(opcode.code + (opval1.getBinaryFormatCode() << 10));
+		}
+		
+		if(opval1.usesNextWord()) {
+			binaryFormat.add(opval1.getLiteral());
+		}
+		if(isBasicOpcode() && opval2.usesNextWord()) {
+			binaryFormat.add(opval2.getLiteral());
+		}
+	}
+	
+	public int wordCount() {
+		if(isBasicOpcode()) {
+			return opval1.wordCount() + opval2.wordCount() + 1;
+		}
+		else {
+			return opval1.wordCount() + 1;
+		}
+	}
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -40,19 +81,12 @@ public class Operation {
 		return sb.toString();
 	}
 	
-	public void setOpval1(OperationValue opval1) {
-		this.opval1 = opval1;
-	}
-	
-	public void setOpval2(OperationValue opval2) {
-		if(!isBasicOpcode()) {
-			throw new RuntimeException("setOpval2() is not valid for non-basic instructions, THIS SHOULD NEVER HAPPEN!");
-		}
-		this.opval2 = opval2;
-	}
-	
 	public boolean hasLabel() {
 		return label != null;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	public String getLabel() {
